@@ -4,18 +4,18 @@ import { Fragment } from 'react';
 
 import Card from '@/components/common/Card';
 import { CompoundList } from '@/components/common/CompoundList';
-import VillagersOption from '@/components/villagers/VillagersOption';
-import useGetVillagers from '@/hooks/animalCrossing/useGetVillagers';
+import FurnitureOption from '@/components/furniture/FurnitureOption';
+import useGetFurniture from '@/hooks/animalCrossing/useGetFurniture';
 import useModal from '@/hooks/useModal';
 import useObserver from '@/hooks/useObserver';
 import usePage from '@/hooks/usePage';
 
-export default function Home() {
+export default function Furniture() {
   const { isVisible, show, hide } = useModal();
   const { page, isFetching, handleNextPage } = usePage();
   const { observerRef } = useObserver(isFetching, handleNextPage);
 
-  const { villagersList, isLoading } = useGetVillagers();
+  const { furnitureList, isLoading } = useGetFurniture();
 
   return (
     <CompoundList>
@@ -23,8 +23,8 @@ export default function Home() {
 
       <CompoundList.CompoundGridContainer
         isLoading={isLoading}
-        isSuccess={villagersList.length > 0}>
-        {villagersList.map((item, index) => {
+        isSuccess={furnitureList.length > 0}>
+        {furnitureList.map((item, index) => {
           if (index <= page - 1) {
             if (index === page - 1) {
               return (
@@ -33,8 +33,7 @@ export default function Home() {
                     image={item.imageUrl}
                     title={item.title}
                     id={item.id}
-                    pathname="villagers"
-                    size="medium"
+                    pathname="furniture"
                   />
                 </div>
               );
@@ -45,8 +44,7 @@ export default function Home() {
                     image={item.imageUrl}
                     title={item.title}
                     id={item.id}
-                    pathname="villagers"
-                    size="medium"
+                    pathname="furniture"
                   />
                 </Fragment>
               );
@@ -55,7 +53,7 @@ export default function Home() {
         })}
       </CompoundList.CompoundGridContainer>
 
-      <VillagersOption isVisible={isVisible} hideOption={hide} />
+      <FurnitureOption isVisible={isVisible} hideOption={hide} />
     </CompoundList>
   );
 }

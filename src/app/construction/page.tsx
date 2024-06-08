@@ -4,18 +4,18 @@ import { Fragment } from 'react';
 
 import Card from '@/components/common/Card';
 import { CompoundList } from '@/components/common/CompoundList';
-import VillagersOption from '@/components/villagers/VillagersOption';
-import useGetVillagers from '@/hooks/animalCrossing/useGetVillagers';
+import ConstructionOption from '@/components/construction/ConstructionOption';
+import useGetConstruction from '@/hooks/animalCrossing/useGetConstruction';
 import useModal from '@/hooks/useModal';
 import useObserver from '@/hooks/useObserver';
 import usePage from '@/hooks/usePage';
 
-export default function Home() {
+export default function Construction() {
   const { isVisible, show, hide } = useModal();
   const { page, isFetching, handleNextPage } = usePage();
   const { observerRef } = useObserver(isFetching, handleNextPage);
 
-  const { villagersList, isLoading } = useGetVillagers();
+  const { constructionList, isLoading } = useGetConstruction();
 
   return (
     <CompoundList>
@@ -23,8 +23,8 @@ export default function Home() {
 
       <CompoundList.CompoundGridContainer
         isLoading={isLoading}
-        isSuccess={villagersList.length > 0}>
-        {villagersList.map((item, index) => {
+        isSuccess={constructionList.length > 0}>
+        {constructionList.map((item, index) => {
           if (index <= page - 1) {
             if (index === page - 1) {
               return (
@@ -33,8 +33,7 @@ export default function Home() {
                     image={item.imageUrl}
                     title={item.title}
                     id={item.id}
-                    pathname="villagers"
-                    size="medium"
+                    pathname="construction"
                   />
                 </div>
               );
@@ -45,8 +44,7 @@ export default function Home() {
                     image={item.imageUrl}
                     title={item.title}
                     id={item.id}
-                    pathname="villagers"
-                    size="medium"
+                    pathname="construction"
                   />
                 </Fragment>
               );
@@ -55,7 +53,7 @@ export default function Home() {
         })}
       </CompoundList.CompoundGridContainer>
 
-      <VillagersOption isVisible={isVisible} hideOption={hide} />
+      <ConstructionOption isVisible={isVisible} hideOption={hide} />
     </CompoundList>
   );
 }
