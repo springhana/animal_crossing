@@ -2,6 +2,7 @@ import '../style/globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Suspense } from 'react';
 
 import Header from '@/components/common/Header';
 import Menu from '@/components/common/Menu';
@@ -22,11 +23,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <ReactQueryProviders>
-          <Header />
-          <Menu />
-          {children}
-        </ReactQueryProviders>
+        <Suspense fallback={<div>로딩</div>}>
+          <ReactQueryProviders>
+            <Header />
+            <Menu />
+            {children}
+          </ReactQueryProviders>
+        </Suspense>
       </body>
     </html>
   );
