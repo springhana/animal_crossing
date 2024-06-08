@@ -5,7 +5,7 @@
     "prettier",
     "react-refresh",
     "eslint-plugin-simple-import-sort",
-    "unused-imports",
+    "eslint-plugin-unused-imports",
     "import"
   ],
   "parserOptions": {
