@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "JejuHallasan";
+  font-family: 'JejuHallasan';
   font-weight: normal;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.eot");
-  src: url("https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.woff2")
-      format("woff2"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.woff")
-      format("woff"),
-    url("https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.ttf")
-      format("truetype");
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.eot');
+  src:
+    url('https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.eot?#iefix')
+      format('embedded-opentype'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.woff2')
+      format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.woff')
+      format('woff'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/jeju/JejuHallasan.ttf')
+      format('truetype');
   font-display: swap;
 }
 
@@ -123,7 +124,7 @@ nav li a {
 }
 
 nav li a:before {
-  content: "";
+  content: '';
   width: 70px;
   height: 2px;
   background-color: #fff;
@@ -491,7 +492,7 @@ nav li:nth-of-type(6) {
   }
 }
 .home a {
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Work Sans', sans-serif;
   color: #fff;
   font-weight: 300;
   font-size: 12px;
@@ -601,7 +602,7 @@ nav li:nth-of-type(6) {
 .custom-text::before {
   display: flex;
   flex-shrink: 0;
-  content: "";
+  content: '';
   background-color: #fff;
   width: 1.5em;
   height: 1.5em;
@@ -696,3 +697,25 @@ nav li:nth-of-type(6) {
 .custom-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* 로딩 애니메이션 */
+.loading {
+  transition: all 0.5s;
+  animation: animate-loading 0.5s infinite;
+}
+
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  75% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
