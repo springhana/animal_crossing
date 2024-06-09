@@ -120,8 +120,8 @@ interface ICompoundContentProps {
 function CompoundContent({ leftText, rightText }: ICompoundContentProps) {
   return (
     <p className="flex items-center justify-between h-full border-b border-gray-400 p-2">
-      <span>{leftText && leftText}</span>
-      <span>{rightText && rightText}</span>
+      <span>{leftText ? leftText : '-'}</span>
+      <span>{rightText ? rightText : '-'}</span>
     </p>
   );
 }
