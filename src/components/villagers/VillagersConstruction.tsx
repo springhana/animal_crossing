@@ -15,13 +15,13 @@ export default function VillagersConstruction({
     data,
   } = useGetVillagerDetailsNH(name);
 
-  if (!name) {
+  if (!name || isError) {
     return <></>;
   }
 
   return (
     <div className="flex justify-around items-center mobile:flex-col mobile_1:flex-col">
-      {isLoadingNH && isError
+      {isLoadingNH
         ? '로딩'
         : data && (
             <>
