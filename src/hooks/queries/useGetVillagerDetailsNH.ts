@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { queryKeys } from '@/constants';
 
@@ -7,7 +7,7 @@ import useAxiosInstance from '../useAxiosInstance';
 const useGetVillagerDetailsNH = (value: string | undefined | null) => {
   const axiosInstance = useAxiosInstance();
 
-  return useQuery({
+  return useSuspenseQuery({
     queryFn: async () => {
       const { data } = await axiosInstance.get(
         `/villagers?name=${value}&nhdetails=true`
@@ -16,7 +16,6 @@ const useGetVillagerDetailsNH = (value: string | undefined | null) => {
       return data;
     },
     queryKey: [queryKeys.VILLAGERS, value],
-    enabled: Boolean(value),
     select: (response) => {
       if (!response) return;
 
