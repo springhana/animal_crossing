@@ -8,7 +8,7 @@ interface ICompoundContainerProps {
 
 function CompoundContainer({ children }: ICompoundContainerProps) {
   return (
-    <main className="w-full h-[calc(100vh_-_6.25rem)] min-w-min_w pb-10 px-10 flex justify-center items-center mobile:px-2 mobile:pb-0 mobile_1:px-5 mobile_1:pb-0">
+    <main className="w-full h-[calc(100vh_-_6.25rem)] min-w-min_w pb-20 px-10 flex justify-center items-center mobile:px-2  mobile_1:px-5 ">
       <div className="p-5 flex justify-center items-center bg-black w-full max-w-max_w h-full rounded-md mobile:p-2 mobile_1:p-3">
         <div className="relative bg-[#e9e6e4] w-full h-full grid grid-cols-blog_columns grid-rows-blog_rows overflow-hidden tablet:grid-cols-tablet_blog_columns tablet_1:grid-cols-tablet_blog_columns mobile:grid-cols-moblie_blog_columns mobile_1:grid-cols-moblie_blog_columns">
           {children}
