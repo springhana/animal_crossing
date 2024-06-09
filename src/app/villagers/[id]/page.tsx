@@ -8,7 +8,6 @@ import { CompoundDetail } from '@/components/common/CompoundDetail';
 import SkeletonSeeMore from '@/components/skeleton/SkeletonSeeMore';
 import { numbers } from '@/constants';
 import useGetVillagerDetail from '@/hooks/animalCrossing/detail/useGetVillagerDetail';
-import useGetVillagerDetailsNH from '@/hooks/queries/useGetVillagerDetailsNH';
 import usePathnameSplit from '@/hooks/usePathnameSplit';
 import { MonthDay } from '@/utils/date';
 import {
@@ -17,10 +16,14 @@ import {
   parseSpecies,
   parseStyle,
 } from '@/utils/translation';
-
-const ImageDynamic = dynamic(
-  () => import('@/components/common/ImageDynamic').then((mod) => mod.default),
-  { ssr: false }
+const VillagersConstruction = dynamic(
+  () =>
+    import('@/components/villagers/VillagersConstruction').then(
+      (mod) => mod.default
+    ),
+  {
+    ssr: false,
+  }
 );
 
 export default function VillagersDetail() {
@@ -30,11 +33,6 @@ export default function VillagersDetail() {
 
   const { villagerFilter, villagerMore, translationsVillager, isLoading } =
     useGetVillagerDetail(pathname);
-  const {
-    isLoading: isLoadingNH,
-    isError,
-    data,
-  } = useGetVillagerDetailsNH(villagerFilter?.name);
 
   const handleOnClickRouter = (id: string) => {
     router.push(`/villagers/${id}`);
@@ -47,11 +45,7 @@ export default function VillagersDetail() {
   return (
     <CompoundDetail>
       <CompoundDetail.CompoundLeftAside title={title}>
-        {!isError && !isLoadingNH && villagerFilter ? (
-          <Image src={data.image_url} alt="주민 사진" fill className="p-10" />
-        ) : (
-          <SkeletonSeeMore />
-        )}
+        <></>
       </CompoundDetail.CompoundLeftAside>
       <CompoundDetail.CompoundGridContainer>
         <CompoundDetail.CompoundSection
@@ -63,8 +57,10 @@ export default function VillagersDetail() {
           }>
           <CompoundDetail.CompoundFlexContainer>
             <div className="relative max-w-[200px] h-[200px] w-full mx-auto">
-              {villagerFilter?.photoImage && (
+              {villagerFilter?.photoImage ? (
                 <Image src={villagerFilter.photoImage} alt="주민 포스터" fill />
+              ) : (
+                <SkeletonSeeMore />
               )}
             </div>
             <div className="flex flex-col m-auto px-10 w-full h-[200px]">
@@ -108,30 +104,7 @@ export default function VillagersDetail() {
         </CompoundDetail.CompoundSection>
 
         <CompoundDetail.CompoundSection title={'집 & 외형'}>
-          <div className="flex justify-around items-center mobile:flex-col mobile_1:flex-col">
-            {isLoadingNH && isError
-              ? '로딩'
-              : data && (
-                  <>
-                    <div className="flex flex-col justify-center items-center w-full">
-                      <ImageDynamic
-                        src={data.house_exterior_url}
-                        alt={'집 외형'}
-                        size={300}
-                      />
-                      <p>집 외형</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center w-full">
-                      <ImageDynamic
-                        src={data.house_interior_url}
-                        alt={'집 안'}
-                        size={300}
-                      />
-                      <p>집 안</p>
-                    </div>
-                  </>
-                )}
-          </div>
+          <VillagersConstruction name={villagerFilter?.name} />
 
           <CompoundDetail.CompoundFlexColContainer>
             <CompoundDetail.CompoundContent
