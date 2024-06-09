@@ -282,6 +282,9 @@ nav li:nth-of-type(6) {
   .slide-in-nav-item-delay-5-reverse {
     animation: slide-in-nav-item-reverse-mobile 0.4s linear 1 0.2s both;
   }
+  nav ul {
+    overflow-y: scroll;
+  }
 
   nav ul li {
     transform: translateY(0);

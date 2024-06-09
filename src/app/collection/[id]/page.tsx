@@ -115,9 +115,9 @@ export default function CollectionDeatil() {
         </CompoundDetail.CompoundSection>
 
         <CompoundDetail.CompoundSection title={'실물'}>
-          <div className="flex justify-around items-center">
+          <div className="flex justify-around items-center mobile:flex-col mobile_1:flex-col">
             <div className="flex flex-col justify-center items-center w-full">
-              <div className="relative w-[300px] h-[300px] bg-white rounded-full">
+              <div className="relative w-[300px] h-[300px] bg-white rounded-full mx-auto">
                 {collectionFilter.critterpediaImage && (
                   <Image
                     src={collectionFilter.critterpediaImage}
@@ -129,7 +129,7 @@ export default function CollectionDeatil() {
               <p>실물</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full">
-              <div className="relative w-[300px] h-[300px] bg-white rounded-full">
+              <div className="relative w-[300px] h-[300px] bg-white rounded-full mx-auto">
                 {collectionFilter.furnitureImage && (
                   <Image
                     src={collectionFilter.furnitureImage}
