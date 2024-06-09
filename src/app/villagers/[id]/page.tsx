@@ -3,7 +3,9 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { notFound, useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 
+import Loading from '@/app/loading';
 import { CompoundDetail } from '@/components/common/CompoundDetail';
 import SkeletonSeeMore from '@/components/skeleton/SkeletonSeeMore';
 import { numbers } from '@/constants';
@@ -16,6 +18,7 @@ import {
   parseSpecies,
   parseStyle,
 } from '@/utils/translation';
+
 const VillagersConstruction = dynamic(
   () =>
     import('@/components/villagers/VillagersConstruction').then(
@@ -104,7 +107,9 @@ export default function VillagersDetail() {
         </CompoundDetail.CompoundSection>
 
         <CompoundDetail.CompoundSection title={'집 & 외형'}>
-          <VillagersConstruction name={villagerFilter?.name} />
+          <Suspense fallback={<Loading />}>
+            <VillagersConstruction name={villagerFilter?.name} />
+          </Suspense>
 
           <CompoundDetail.CompoundFlexColContainer>
             <CompoundDetail.CompoundContent
