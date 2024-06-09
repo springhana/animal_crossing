@@ -8,6 +8,8 @@ import Header from '@/components/common/Header';
 import Menu from '@/components/common/Menu';
 import { ReactQueryProviders } from '@/utils/query/queryProviders';
 
+import Loading from './loading';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Suspense fallback={<div>로딩</div>}>
+        <Suspense fallback={<Loading />}>
           <ReactQueryProviders>
             <Header />
             <Menu />
