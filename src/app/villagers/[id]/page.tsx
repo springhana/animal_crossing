@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 
 import { CompoundDetail } from '@/components/common/CompoundDetail';
+import SkeletonSeeMore from '@/components/skeleton/SkeletonSeeMore';
+import { numbers } from '@/constants';
 import useGetVillagerDetail from '@/hooks/animalCrossing/detail/useGetVillagerDetail';
 import useGetVillagerDetailsNH from '@/hooks/queries/useGetVillagerDetailsNH';
 import usePathnameSplit from '@/hooks/usePathnameSplit';
@@ -33,17 +35,18 @@ export default function VillagersDetail() {
   };
 
   if (!villagerFilter) {
-    return <>{isLoading}</>;
+    return notFound();
   }
 
   return (
     <CompoundDetail>
       <CompoundDetail.CompoundLeftAside title={title}>
-        {!isLoadingNH && villagerFilter && (
+        {!isError && !isLoadingNH && villagerFilter ? (
           <Image src={data.image_url} alt="주민 사진" fill className="p-10" />
+        ) : (
+          <SkeletonSeeMore />
         )}
       </CompoundDetail.CompoundLeftAside>
-
       <CompoundDetail.CompoundGridContainer>
         <CompoundDetail.CompoundSection
           title={translationsVillager?.name}
@@ -156,21 +159,25 @@ export default function VillagersDetail() {
           </CompoundDetail.CompoundFlexColContainer>
         </CompoundDetail.CompoundSection>
       </CompoundDetail.CompoundGridContainer>
-
       <CompoundDetail.CompoundRightAside>
-        {villagerMore.map((item, index) => (
-          <div
-            className="w-full mb-20 text-center cursor-pointer"
-            key={index}
-            onClick={() => handleOnClickRouter(item.uniqueEntryId)}>
-            <h1 className="text-bs_24">{item.translations['kRko']}</h1>
-            <p className="relative w-[100px] h-[100px] m-auto">
-              {item.photoImage && (
-                <Image src={item.photoImage} alt="주민 사진" fill />
-              )}
-            </p>
-          </div>
-        ))}
+        {isLoading
+          ? Array.from(
+              { length: numbers.SEE_MORE },
+              (_, index) => index + 1
+            ).map((index) => <SkeletonSeeMore key={index} />)
+          : villagerMore.map((item, index) => (
+              <div
+                className="w-full mb-20 text-center cursor-pointer"
+                key={index}
+                onClick={() => handleOnClickRouter(item.uniqueEntryId)}>
+                <h1 className="text-bs_24">{item.translations['kRko']}</h1>
+                <p className="relative w-[100px] h-[100px] m-auto">
+                  {item.photoImage && (
+                    <Image src={item.photoImage} alt="주민 사진" fill />
+                  )}
+                </p>
+              </div>
+            ))}
       </CompoundDetail.CompoundRightAside>
     </CompoundDetail>
   );

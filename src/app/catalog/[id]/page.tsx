@@ -2,10 +2,12 @@
 
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 
 import { CompoundDetail } from '@/components/common/CompoundDetail';
 import SizeIcon from '@/components/common/SizeIcon';
+import SkeletonSeeMore from '@/components/skeleton/SkeletonSeeMore';
+import { numbers } from '@/constants';
 import useGetCatalogDetail from '@/hooks/animalCrossing/detail/useGetCatalogDetail';
 import usePathnameSplit from '@/hooks/usePathnameSplit';
 import { image } from '@/utils/image';
@@ -23,7 +25,7 @@ export default function CatalogDeatil() {
   };
 
   if (!catalogFilter) {
-    return <></>;
+    return notFound();
   }
 
   return (
@@ -36,12 +38,14 @@ export default function CatalogDeatil() {
         <CompoundDetail.CompoundSection title={translationsCatalog?.name}>
           <CompoundDetail.CompoundFlexContainer>
             <div className="relative max-w-[200px] h-[200px] w-full mx-auto">
-              {!isLoading && image(catalogFilter) && (
+              {!isLoading && image(catalogFilter) ? (
                 <Image
                   src={image(catalogFilter) as string | StaticImport}
                   alt="기타 이미지"
                   fill
                 />
+              ) : (
+                <SkeletonSeeMore />
               )}
             </div>
             <div className="flex flex-col m-auto px-10 w-full h-[200px]">
@@ -129,33 +133,38 @@ export default function CatalogDeatil() {
       </CompoundDetail.CompoundGridContainer>
 
       <CompoundDetail.CompoundRightAside>
-        {catalogMore.map((item, index) => (
-          <div
-            className="w-full mb-20 text-center cursor-pointer"
-            key={index}
-            onClick={() =>
-              handleOnClickRouter(
-                item.uniqueEntryId
-                  ? item.uniqueEntryId
-                  : item.translations
-                    ? item.translations['kRko']
-                    : item.name
-              )
-            }>
-            <h1 className="text-bs_24">
-              {item.translations ? item.translations['kRko'] : item.name}
-            </h1>
-            <p className="relative w-[100px] h-[100px] m-auto">
-              {!isLoading && image(item) && (
-                <Image
-                  src={image(item) as string | StaticImport}
-                  alt="가구 이미지"
-                  fill
-                />
-              )}
-            </p>
-          </div>
-        ))}
+        {isLoading
+          ? Array.from(
+              { length: numbers.SEE_MORE },
+              (_, index) => index + 1
+            ).map((index) => <SkeletonSeeMore key={index} />)
+          : catalogMore.map((item, index) => (
+              <div
+                className="w-full mb-20 text-center cursor-pointer"
+                key={index}
+                onClick={() =>
+                  handleOnClickRouter(
+                    item.uniqueEntryId
+                      ? item.uniqueEntryId
+                      : item.translations
+                        ? item.translations['kRko']
+                        : item.name
+                  )
+                }>
+                <h1 className="text-bs_24">
+                  {item.translations ? item.translations['kRko'] : item.name}
+                </h1>
+                <p className="relative w-[100px] h-[100px] m-auto">
+                  {!isLoading && image(item) && (
+                    <Image
+                      src={image(item) as string | StaticImport}
+                      alt="가구 이미지"
+                      fill
+                    />
+                  )}
+                </p>
+              </div>
+            ))}
       </CompoundDetail.CompoundRightAside>
     </CompoundDetail>
   );

@@ -1,10 +1,12 @@
 'use client';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 
 import { CompoundDetail } from '@/components/common/CompoundDetail';
 import SizeIcon from '@/components/common/SizeIcon';
+import SkeletonSeeMore from '@/components/skeleton/SkeletonSeeMore';
+import { numbers } from '@/constants';
 import useGetFurnitureDetail from '@/hooks/animalCrossing/detail/useGetFurnitureDetail';
 import usePathnameSplit from '@/hooks/usePathnameSplit';
 import { image } from '@/utils/image';
@@ -26,7 +28,7 @@ export default function FurnitureDeatil() {
   };
 
   if (!furnitureFilter) {
-    return <></>;
+    return notFound();
   }
 
   return (
@@ -39,12 +41,14 @@ export default function FurnitureDeatil() {
         <CompoundDetail.CompoundSection title={translationsFurniture?.name}>
           <CompoundDetail.CompoundFlexContainer>
             <div className="relative max-w-[200px] h-[200px] w-full mx-auto">
-              {!isLoading && image(furnitureFilter) && (
+              {!isLoading && image(furnitureFilter) ? (
                 <Image
                   src={image(furnitureFilter) as string | StaticImport}
                   alt="가구 이미지"
                   fill
                 />
+              ) : (
+                <SkeletonSeeMore />
               )}
             </div>
             <div className="flex flex-col m-auto px-10 w-full h-[200px] mobile:px-0 mobile_1:px-0">
@@ -148,29 +152,34 @@ export default function FurnitureDeatil() {
       </CompoundDetail.CompoundGridContainer>
 
       <CompoundDetail.CompoundRightAside>
-        {furnitureMore.map((item, index) => (
-          <div
-            className="w-full mb-20 text-center cursor-pointer"
-            key={index}
-            onClick={() =>
-              handleOnClickRouter(
-                item.translations ? item.translations['kRko'] : item.name
-              )
-            }>
-            <h1 className="text-bs_24">
-              {item.translations ? item.translations['kRko'] : item.name}
-            </h1>
-            <p className="relative w-[100px] h-[100px] m-auto">
-              {!isLoading && image(item) && (
-                <Image
-                  src={image(item) as string | StaticImport}
-                  alt="가구 이미지"
-                  fill
-                />
-              )}
-            </p>
-          </div>
-        ))}
+        {isLoading
+          ? Array.from(
+              { length: numbers.SEE_MORE },
+              (_, index) => index + 1
+            ).map((index) => <SkeletonSeeMore key={index} />)
+          : furnitureMore.map((item, index) => (
+              <div
+                className="w-full mb-20 text-center cursor-pointer"
+                key={index}
+                onClick={() =>
+                  handleOnClickRouter(
+                    item.translations ? item.translations['kRko'] : item.name
+                  )
+                }>
+                <h1 className="text-bs_24">
+                  {item.translations ? item.translations['kRko'] : item.name}
+                </h1>
+                <p className="relative w-[100px] h-[100px] m-auto">
+                  {!isLoading && image(item) && (
+                    <Image
+                      src={image(item) as string | StaticImport}
+                      alt="가구 이미지"
+                      fill
+                    />
+                  )}
+                </p>
+              </div>
+            ))}
       </CompoundDetail.CompoundRightAside>
     </CompoundDetail>
   );
