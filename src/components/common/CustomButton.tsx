@@ -19,7 +19,7 @@ export default function CustomButton({
   return (
     <button
       type={type}
-      className={`p-3 ${buttonStyle[size]} mb-5 flex justify-center items-center gap-2`}
+      className={`p-3 ${buttonStyle[size]} mb-20 flex justify-center items-center gap-2`}
       {...props}>
       {children}
     </button>

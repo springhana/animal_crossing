@@ -283,11 +283,12 @@ nav li:nth-of-type(6) {
     animation: slide-in-nav-item-reverse-mobile 0.4s linear 1 0.2s both;
   }
   nav ul {
-    overflow-y: scroll;
+    flex-wrap: wrap;
   }
 
   nav ul li {
     transform: translateY(0);
+    flex-basis: 50%;
   }
 
   nav li a {
