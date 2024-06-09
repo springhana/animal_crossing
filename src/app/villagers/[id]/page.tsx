@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { notFound, useRouter } from 'next/navigation';
 
@@ -16,6 +17,11 @@ import {
   parseSpecies,
   parseStyle,
 } from '@/utils/translation';
+
+const ImageDynamic = dynamic(
+  () => import('@/components/common/ImageDynamic').then((mod) => mod.default),
+  { ssr: false }
+);
 
 export default function VillagersDetail() {
   const router = useRouter();
@@ -108,27 +114,19 @@ export default function VillagersDetail() {
               : data && (
                   <>
                     <div className="flex flex-col justify-center items-center w-full">
-                      <div className="relative w-[300px] h-[300px]">
-                        {data.house_exterior_url && (
-                          <Image
-                            src={data.house_exterior_url}
-                            alt="집 외형"
-                            fill
-                          />
-                        )}
-                      </div>
+                      <ImageDynamic
+                        src={data.house_exterior_url}
+                        alt={'집 외형'}
+                        size={300}
+                      />
                       <p>집 외형</p>
                     </div>
                     <div className="flex flex-col justify-center items-center w-full">
-                      <div className="relative w-[300px] h-[300px]">
-                        {data.house_interior_url && (
-                          <Image
-                            src={data.house_interior_url}
-                            alt="집 안"
-                            fill
-                          />
-                        )}
-                      </div>
+                      <ImageDynamic
+                        src={data.house_interior_url}
+                        alt={'집 안'}
+                        size={300}
+                      />
                       <p>집 안</p>
                     </div>
                   </>
