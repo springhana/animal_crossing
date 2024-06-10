@@ -19,7 +19,10 @@ export default function Home() {
 
   return (
     <CompoundList>
-      <CompoundList.CompoundFilterButton onShow={show} />
+      <CompoundList.CompoundFlexContainer>
+        <CompoundList.CompoundFilterButton onShow={show} />
+        <CompoundList.CompoundSettingButton />
+      </CompoundList.CompoundFlexContainer>
 
       <CompoundList.CompoundGridContainer
         isLoading={isLoading}
