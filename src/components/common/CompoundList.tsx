@@ -5,6 +5,7 @@ import { numbers } from '@/constants';
 import SkeletonCard from '../skeleton/SkeletonCard';
 import FilterButton from './FilterButton';
 import NotResultText from './NotResultText';
+import SettingButton from './SettingButton';
 
 interface ICompoundContainerProps {
   children: ReactNode;
@@ -54,7 +55,17 @@ function CompoundFilterButton({ onShow }: ICompoundFilterButtonProps) {
   return <FilterButton show={onShow} />;
 }
 
+function CompoundSettingButton() {
+  return <SettingButton />;
+}
+
+function CompoundFlexContainer({ children }: ICompoundContainerProps) {
+  return <div className="w-full flex justify-between">{children}</div>;
+}
+
 export const CompoundList = Object.assign(CompoundContainer, {
   CompoundGridContainer,
   CompoundFilterButton,
+  CompoundFlexContainer,
+  CompoundSettingButton,
 });
