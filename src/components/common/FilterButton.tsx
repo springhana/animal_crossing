@@ -8,11 +8,9 @@ interface IFilterButtonProps {
 
 export default function FilterButton({ show }: IFilterButtonProps) {
   return (
-    <div className="w-full flex justify-start">
-      <CustomButton onClick={show}>
-        <FilterIcon />
-        필터
-      </CustomButton>
-    </div>
+    <CustomButton onClick={show}>
+      <FilterIcon />
+      필터
+    </CustomButton>
   );
 }
